@@ -48,8 +48,15 @@ public class UsedCars extends BasePage {
 			popularModelsText[i++] = model.getText();
 			System.out.println(model.getText());
 		}
-		
+
 		return popularModelsText;
+	}
+
+	@FindBy(xpath = "//img[@data-track-label='zw-header-logo']")
+	WebElement headerLogo;
+
+	public void navigateToHomePage() {
+		headerLogo.click();
 	}
 
 }

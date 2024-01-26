@@ -17,5 +17,7 @@ public class TC_002_UsedCars extends BaseClass {
 
 		String[] popularModels = usedCars.popularModelList();
 
+		usedCars.navigateToHomePage();
+
 	}
 }

@@ -5,6 +5,7 @@
 		<classes>
 			<class name="TestCases.TC_001_UpcomingBikes" />
 			<class name="TestCases.TC_002_UsedCars" />
+			<class name="TestCases.TC_003_LoginSignup" />
 		</classes>
 	</test> <!--
 	Test -->
