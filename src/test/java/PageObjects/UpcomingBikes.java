@@ -1,5 +1,6 @@
 package PageObjects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -69,26 +70,44 @@ public class UpcomingBikes extends BasePage {
 	@FindAll(@FindBy(xpath = "//div[@class='p-15 pt-10 mke-ryt rel']/div[2]"))
 	List<WebElement> bikeLaunchDate;
 
-	String[][] bikeDetails;
+	List<String[]> bikeDetails = new ArrayList<>();
+	String[] bike;
 
-	public String[][] getDetails() {
+	public List<String[]> getDetails() {
 //		viewMore.click();
 		jse.executeScript("arguments[0].scrollIntoView();", viewMore);
 		jse.executeScript("arguments[0].click();", viewMore);
 
-		int size = bikeNames.size();
-//		System.out.println(size);
+		sleep(5000);
 
-		bikeDetails = new String[size][3];
+		int size = bikeNames.size();
+
+		double priceDouble = 0.0;
 
 		for (int i = 0; i < size; i++) {
-//			System.out.println(bikeNames.get(i).getText());
-//			System.out.println(bikePrice.get(i).getText());
-//			System.out.println(bikeLaunchDate.get(i).getText());
-			bikeDetails[i][0] = bikeNames.get(i).getText();
-			bikeDetails[i][1] = bikePrice.get(i).getText();
-			bikeDetails[i][2] = bikeLaunchDate.get(i).getText();
-//			System.out.println("**********************************");
+			bike = new String[3];
+			String priceString = bikePrice.get(i).getText();
+			String[] words = priceString.split(" ");
+
+			if (priceString.contains("Lakh"))
+				priceDouble = Double.parseDouble(words[1]);
+			else {
+//				System.out.println("NOT LAKH! " + words[1]);
+				String notLakh = words[1].replaceAll(",", "");
+
+				priceDouble = Double.parseDouble(notLakh);
+				priceDouble /= 100000;
+			}
+
+			if (priceDouble <= 4.0) {
+				System.out.println(priceString + " " + priceDouble);
+				bike[0] = bikeNames.get(i).getText();
+				bike[1] = bikePrice.get(i).getText();
+				bike[2] = bikeLaunchDate.get(i).getText();
+				bikeDetails.add(bike);
+				System.out.println(bikeDetails.size());
+			}
+
 		}
 
 		return bikeDetails;

@@ -8,10 +8,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
+import Utilities.ExcelUtilities;
+
 public class BaseClass {
 
 	public static WebDriver driver;
 	public static ResourceBundle rb = ResourceBundle.getBundle("config");
+	public static ExcelUtilities excelUtilities = new ExcelUtilities();
 
 	@BeforeTest
 	public void setUp() {
@@ -38,6 +41,10 @@ public class BaseClass {
 
 	public String getURL() {
 		return rb.getString("baseURL");
+	}
+
+	public String fileName() {
+		return rb.getString("fileName");
 	}
 
 }
