@@ -13,35 +13,52 @@ public class UsedCars extends BasePage {
 
 	public UsedCars(WebDriver driver) {
 		super(driver);
-		// TODO Auto-generated constructor stub
 	}
 
 	@FindBy(xpath = "//a[normalize-space()='Used Cars']")
-	WebElement usedCars;
+	private WebElement usedCars;
 
-	WebElement carCity;
+	private WebElement carCity;
 
-	public void findUsedCars(String city) {
-		actions = new Actions(driver);
-//		jse.executeScript("arugments[0].scrollIntoView();",usedCars);
+	public void scrollToTop() {
 		jse.executeScript("window.scrollTo(0,0)");
 		sleep(2000);
+	}
+
+	public boolean validateUsedCars() {
+		return usedCars.isDisplayed();
+	}
+
+	public void hoverUsedCars() {
 		actions.moveToElement(usedCars).perform();
+	}
+
+	public boolean validateCity(String city) {
 		String xpathString = "//li/span[text()='" + city + "']";
 
-		carCity = driver.findElement(By.xpath(xpathString));
+		try {
+			carCity = driver.findElement(By.xpath(xpathString));
+			return true;
+		} catch (Exception e) {
+			System.out.println("City not found!");
+			return false;
+		}
+	}
 
+	public void clickCity() {
 		carCity.click();
 	}
 
 	@FindAll(@FindBy(xpath = "//div[text()='Popular Models']/following-sibling::div[1]//li/label"))
-	List<WebElement> popularModelsElement;
+	private List<WebElement> popularModelsElement;
 
-	String[] popularModelsText;
+	private String[] popularModelsText;
 
 	public String[] popularModelList() {
 		int size = popularModelsElement.size();
 		popularModelsText = new String[size];
+		jse.executeScript("arguments[0].scrollIntoView();", popularModelsElement.get(0));
+
 		int i = 0;
 
 		for (WebElement model : popularModelsElement) {

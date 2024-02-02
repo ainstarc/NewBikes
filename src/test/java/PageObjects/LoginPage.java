@@ -11,7 +11,6 @@ public class LoginPage extends BasePage {
 
 	public LoginPage(WebDriver driver) {
 		super(driver);
-		// TODO Auto-generated constructor stub
 	}
 
 	@FindBy(id = "forum_login_title_lg")
@@ -20,11 +19,21 @@ public class LoginPage extends BasePage {
 	@FindBy(xpath = "//span[text()='Google']")
 	WebElement googleButton;
 
+	public boolean validateLoginSignup() {
+		sleep(2000);
+		return loginSignup.isDisplayed();
+	}
+
 	public void clickLoginSignup() {
 		loginSignup.click();
+	}
 
-		sleep(3000);
+	public boolean validateGoogleButton() {
+		sleep(2000);
+		return googleButton.isDisplayed();
+	}
 
+	public void clickGoogleButton() {
 		googleButton.click();
 	}
 
@@ -34,7 +43,10 @@ public class LoginPage extends BasePage {
 		sleep(2000);
 		windowHandles = driver.getWindowHandles();
 
-//		System.out.println(windowHandles.size());
+		if (windowHandles.size() == 1) {
+			clickGoogleButton();
+			navigateToGoogleLogin();
+		}
 
 		for (String window : windowHandles) {
 			driver.switchTo().window(window);
@@ -57,7 +69,6 @@ public class LoginPage extends BasePage {
 	WebElement errorMessage;
 
 	public String verifyNegativeLogin(String email) {
-//		driver.findElement(By.id("identifierId")).sendKeys(email);
 		emailBox.sendKeys(email);
 		nextButton.click();
 

@@ -2,6 +2,7 @@ package TestCases;
 
 import java.io.IOException;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import PageObjects.UsedCars;
@@ -11,22 +12,43 @@ public class TC_002_UsedCars extends BaseClass {
 
 	UsedCars usedCars;
 
-	@Test
-	public void test_UsedCars() throws IOException {
+	@Test(priority = 1)
+	public void test_UsedCars() {
 		usedCars = new UsedCars(driver);
 
-		usedCars.findUsedCars(rb.getString("city"));
+		usedCars.scrollToTop();
+		boolean actual = usedCars.validateUsedCars();
+
+		Assert.assertEquals(actual, expected);
+
+		usedCars.hoverUsedCars();
+
+	}
+
+	@Test(priority = 2, dependsOnMethods = "test_UsedCars")
+	public void test_CarCity() {
+		boolean actual = usedCars.validateCity(rb.getString("city"));
+
+		Assert.assertEquals(actual, expected);
+
+		usedCars.clickCity();
+	}
+
+	@Test(priority = 3, dependsOnMethods = "test_CarCity")
+	public void test_PopularModels() throws IOException {
 
 		String[] popularModels = usedCars.popularModelList();
 
-		String fileName = fileName();
 		String sheetName = "PopularModels";
 
 		for (int i = 0; i < popularModels.length; i++) {
 			excelUtilities.setCellData(fileName, sheetName, i, 0, popularModels[i]);
 		}
 
-		usedCars.navigateToHomePage();
+	}
 
+	@Test(priority = 4)
+	public void test_NavigateToHomePage() {
+		usedCars.navigateToHomePage();
 	}
 }

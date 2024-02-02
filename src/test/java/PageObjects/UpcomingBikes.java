@@ -10,48 +10,47 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
+import Utilities.Screenshots;
+
 public class UpcomingBikes extends BasePage {
 
 	public UpcomingBikes(WebDriver driver) {
 		super(driver);
-		// TODO Auto-generated constructor stub
 	}
 
 	@FindBy(xpath = "//a[normalize-space()='New Bikes']")
-	WebElement newBikes;
+	private WebElement newBikes;
 
 	@FindBy(xpath = "//span[text()='Upcoming Bikes']")
-	WebElement upcomingBikes;
+	private WebElement upcomingBikes;
 
 	@FindBy(xpath = "//li[text()='Upcoming']")
-	WebElement upcoming;
+	private WebElement upcoming;
 
-	public void upcomingBike() {
-		upcomingBikeHover();
-//		upcomingBikeClick();
+	public boolean validateNewBikes() {
+		return newBikes.isDisplayed();
 	}
 
-	public void upcomingBikeHover() {
-		actions = new Actions(driver);
+	public void newBikeHover() {
 		actions.moveToElement(newBikes).perform();
-//		newBikes.click();
+	}
 
+	public boolean validateUpcomingBikes() {
+		return upcomingBikes.isDisplayed();
+	}
+
+	public void clickUpcomingBikes() {
 		sleep(2000);
-
 		upcomingBikes.click();
 	}
 
-	public void upcomingBikeClick() {
-		newBikes.click();
-
-		sleep(3000);
-
-		upcoming.click();
-	}
-
 	@FindBy(id = "makeId")
-	WebElement manufacturers;
-	Select manufacturerSelect;
+	private WebElement manufacturers;
+	private Select manufacturerSelect;
+
+	public boolean validateManufacturers() {
+		return manufacturers.isDisplayed();
+	}
 
 	public void selectManufacturers(String manufacturer) {
 		manufacturerSelect = new Select(manufacturers);
@@ -59,24 +58,36 @@ public class UpcomingBikes extends BasePage {
 	}
 
 	@FindBy(xpath = "//span[@class='zw-cmn-loadMore']")
-	WebElement viewMore;
+	private WebElement viewMore;
 
 	@FindAll(@FindBy(xpath = "//div[@class='p-15 pt-10 mke-ryt rel']/a"))
-	List<WebElement> bikeNames;
+	private List<WebElement> bikeNames;
 
 	@FindAll(@FindBy(xpath = "//div[@class='p-15 pt-10 mke-ryt rel']/div[1]"))
-	List<WebElement> bikePrice;
+	private List<WebElement> bikePrice;
 
 	@FindAll(@FindBy(xpath = "//div[@class='p-15 pt-10 mke-ryt rel']/div[2]"))
-	List<WebElement> bikeLaunchDate;
+	private List<WebElement> bikeLaunchDate;
 
-	List<String[]> bikeDetails = new ArrayList<>();
-	String[] bike;
+	@FindAll(@FindBy(xpath = "//div[@class='p-15 pt-10 mke-ryt rel']/parent::div"))
+	private List<WebElement> bikeDiv;
+
+	private List<String[]> bikeDetails = new ArrayList<>();
+	private String[] bike;
+
+	public void checkViewMore() {
+		try {
+			jse.executeScript("arguments[0].scrollIntoView();", viewMore);
+			jse.executeScript("arguments[0].click();", viewMore);
+		} catch (Exception e) {
+			System.out.println("View More not available!");
+		}
+	}
+
+	WebElement currentBike;
 
 	public List<String[]> getDetails() {
-//		viewMore.click();
-		jse.executeScript("arguments[0].scrollIntoView();", viewMore);
-		jse.executeScript("arguments[0].click();", viewMore);
+		checkViewMore();
 
 		sleep(5000);
 
@@ -86,13 +97,16 @@ public class UpcomingBikes extends BasePage {
 
 		for (int i = 0; i < size; i++) {
 			bike = new String[3];
+			currentBike = bikeDiv.get(i);
+
+			jse.executeScript("arguments[0].scrollIntoView();", currentBike);
+
 			String priceString = bikePrice.get(i).getText();
 			String[] words = priceString.split(" ");
 
 			if (priceString.contains("Lakh"))
 				priceDouble = Double.parseDouble(words[1]);
 			else {
-//				System.out.println("NOT LAKH! " + words[1]);
 				String notLakh = words[1].replaceAll(",", "");
 
 				priceDouble = Double.parseDouble(notLakh);
@@ -100,12 +114,12 @@ public class UpcomingBikes extends BasePage {
 			}
 
 			if (priceDouble <= 4.0) {
-				System.out.println(priceString + " " + priceDouble);
 				bike[0] = bikeNames.get(i).getText();
 				bike[1] = bikePrice.get(i).getText();
 				bike[2] = bikeLaunchDate.get(i).getText();
 				bikeDetails.add(bike);
-				System.out.println(bikeDetails.size());
+				Screenshots.captureScreen(currentBike, bike[0].trim(), "Bikes");
+				sleep(1000);
 			}
 
 		}
