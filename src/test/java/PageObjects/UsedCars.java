@@ -8,12 +8,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import Utilities.Screenshots;
 
 public class UsedCars extends BasePage {
 
 	public UsedCars(WebDriver driver) {
 		super(driver);
 	}
+
+	private String folderName = "UsedCars";
 
 	@FindBy(xpath = "//a[normalize-space()='Used Cars']")
 	private WebElement usedCars;
@@ -22,15 +27,16 @@ public class UsedCars extends BasePage {
 
 	public void scrollToTop() {
 		jse.executeScript("window.scrollTo(0,0)");
-		sleep(2000);
 	}
 
 	public boolean validateUsedCars() {
-		return usedCars.isDisplayed();
+		return checkVisible(usedCars);
 	}
 
 	public void hoverUsedCars() {
+		borderElement(usedCars);
 		actions.moveToElement(usedCars).perform();
+		Screenshots.captureScreen(driver, "CarHover", folderName);
 	}
 
 	public boolean validateCity(String city) {
@@ -38,11 +44,68 @@ public class UsedCars extends BasePage {
 
 		try {
 			carCity = driver.findElement(By.xpath(xpathString));
+			borderElement(carCity);
+			Screenshots.captureScreen(driver, city, folderName);
 			return true;
 		} catch (Exception e) {
-			System.out.println("City not found!");
 			return false;
 		}
+	}
+
+	@FindBy(css = "input#usedCarCity")
+	WebElement locationSearchBox;
+
+	@FindBy(xpath = "//li[@class='ui-menu-item']/a")
+	WebElement citySuggestion;
+
+	public boolean searchCity(String city) {
+		if (searchOtherCity(city)) {
+			return true;
+		} else {
+			driver.navigate().back();
+			return searchCityClick(city);
+
+		}
+
+	}
+
+	@FindBy(xpath = "//span[text()=' Other Cities']")
+	WebElement otherCities;
+
+	@FindBy(id = "gs_input5")
+	WebElement searchOtherCity;
+
+	boolean searchOtherCity(String city) {
+		try {
+			if (checkClickable(otherCities))
+				otherCities.click();
+			sleep(10000);
+			searchOtherCity.sendKeys(city);
+			sleep(5000);
+			String otherCityXpath = "//a[text()='" + city + "']";
+			WebElement otherCity = driver.findElement(By.xpath(otherCityXpath));
+			if (checkClickable(otherCity))
+				otherCity.click();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	boolean searchCityClick(String city) {
+		try {
+			usedCars.click();
+			locationSearchBox.clear();
+			locationSearchBox.sendKeys(city);
+
+			citySuggestion = wait.until(ExpectedConditions.elementToBeClickable(citySuggestion));
+			citySuggestion.click();
+			return true;
+
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
 
 	public void clickCity() {
@@ -54,10 +117,14 @@ public class UsedCars extends BasePage {
 
 	private String[] popularModelsText;
 
+	@FindBy(xpath = "//span[text()='Brand and Model']")
+	private WebElement brandMondel;
+
 	public String[] popularModelList() {
 		int size = popularModelsElement.size();
 		popularModelsText = new String[size];
-		jse.executeScript("arguments[0].scrollIntoView();", popularModelsElement.get(0));
+		jse.executeScript("arguments[0].scrollIntoView();", brandMondel);
+		Screenshots.captureScreen(driver, "PopularModels", folderName);
 
 		int i = 0;
 
@@ -73,6 +140,7 @@ public class UsedCars extends BasePage {
 	WebElement headerLogo;
 
 	public void navigateToHomePage() {
+		jse.executeScript("arguments[0].scrollIntoView();", headerLogo);
 		headerLogo.click();
 	}
 

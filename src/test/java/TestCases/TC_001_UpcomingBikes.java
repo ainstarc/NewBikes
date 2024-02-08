@@ -29,7 +29,6 @@ public class TC_001_UpcomingBikes extends BaseClass {
 	public void test_UpcomingBikes() {
 		boolean actual = homePage.validateUpcomingBikes();
 		Assert.assertEquals(actual, expected);
-
 		homePage.clickUpcomingBikes();
 	}
 

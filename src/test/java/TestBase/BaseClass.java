@@ -11,7 +11,9 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
@@ -26,23 +28,20 @@ public class BaseClass {
 	public static ExcelUtilities excelUtilities = new ExcelUtilities();
 	public static final boolean expected = true;
 	static String folderTimeStamp;
+	static ChromeOptions chromeOptions;
+	static EdgeOptions edgeOptions;
 
-	@BeforeSuite
-	public void folderReset() {
-		
-	}
 	@BeforeTest
 	@Parameters("browser")
 	public void setUp(String br) {
 
 		if (br.equalsIgnoreCase("chrome")) {
-			driver = new ChromeDriver();
+			driver = chromeWithOptions();
 			fileName = fileNameChrome();
 		} else if (br.equalsIgnoreCase("edge")) {
-			driver = new EdgeDriver();
+			driver = edgeWithOptions();
 			fileName = fileNameEdge();
-		} else
-			driver = new ChromeDriver();
+		}
 
 		driver.manage().deleteAllCookies();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -63,28 +62,43 @@ public class BaseClass {
 		driver.quit();
 	}
 
-	public String getURL() {
+	static ChromeDriver chromeWithOptions() {
+		chromeOptions = new ChromeOptions();
+		chromeOptions.addArguments("disable-notifications");
+		ChromeDriver driver = new ChromeDriver(chromeOptions);
+		return driver;
+	}
+
+	static EdgeDriver edgeWithOptions() {
+		edgeOptions = new EdgeOptions();
+		edgeOptions.addArguments("disable-notifications");
+		EdgeDriver driver = new EdgeDriver(edgeOptions);
+		return driver;
+
+	}
+
+	static String getURL() {
 		return rb.getString("baseURL");
 	}
 
 	public static String fileName;
 
-	public void fileName(String br) {
+	static void fileName(String br) {
 		if (br.equalsIgnoreCase("chrome"))
 			fileName = fileNameChrome();
 		else if (br.equalsIgnoreCase("edge"))
 			fileName = fileNameEdge();
 	}
 
-	public String fileNameChrome() {
+	static String fileNameChrome() {
 		return rb.getString("fileNameChrome");
 	}
 
-	public String fileNameEdge() {
+	static String fileNameEdge() {
 		return rb.getString("fileNameEdge");
 	}
-	
-	public String captureScreen(String tname){
+
+	public static String captureScreen(String tname) {
 
 		String timeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
 
@@ -101,4 +115,5 @@ public class BaseClass {
 		return destination;
 
 	}
+
 }

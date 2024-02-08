@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import Utilities.Screenshots;
@@ -18,30 +19,50 @@ public class UpcomingBikes extends BasePage {
 		super(driver);
 	}
 
+	private String folderName = "UpcomingBikes";
+
 	@FindBy(xpath = "//a[normalize-space()='New Bikes']")
 	private WebElement newBikes;
 
 	@FindBy(xpath = "//span[text()='Upcoming Bikes']")
 	private WebElement upcomingBikes;
 
-	@FindBy(xpath = "//li[text()='Upcoming']")
-	private WebElement upcoming;
-
 	public boolean validateNewBikes() {
-		return newBikes.isDisplayed();
+		return checkVisible(newBikes);
 	}
 
 	public void newBikeHover() {
+		borderElement(newBikes);
 		actions.moveToElement(newBikes).perform();
+		Screenshots.captureScreen(driver, "BikeHover", folderName);
 	}
 
 	public boolean validateUpcomingBikes() {
-		return upcomingBikes.isDisplayed();
+		return checkVisible(upcomingBikes);
 	}
 
+	@FindBy(xpath = "//li[text()='Upcoming']")
+	private WebElement upcoming;
+
+	@FindBy(xpath = "//a[text()='Upcoming Bikes']")
+	private WebElement allUpcomingBikes;
+
 	public void clickUpcomingBikes() {
-		sleep(2000);
-		upcomingBikes.click();
+		if (checkClickable(upcomingBikes)) {
+			borderElement(upcomingBikes);
+			upcomingBikes.click();
+		} else {
+			borderElement(newBikes);
+			newBikes.click();
+		}
+		if (checkClickable(upcoming)) {
+			borderElement(upcoming);
+			upcoming.click();
+		}
+		if (checkClickable(allUpcomingBikes)) {
+			borderElement(allUpcomingBikes);
+			jse.executeScript("arguments[0].click();", allUpcomingBikes);
+		}
 	}
 
 	@FindBy(id = "makeId")
@@ -49,12 +70,18 @@ public class UpcomingBikes extends BasePage {
 	private Select manufacturerSelect;
 
 	public boolean validateManufacturers() {
-		return manufacturers.isDisplayed();
+		return checkVisible(manufacturers);
 	}
 
 	public void selectManufacturers(String manufacturer) {
+		borderElement(manufacturers);
 		manufacturerSelect = new Select(manufacturers);
-		manufacturerSelect.selectByVisibleText(manufacturer);
+		try {
+			manufacturerSelect.selectByVisibleText(manufacturer);
+			Screenshots.captureScreen(driver, "SelectManufacturer", folderName);
+		} catch (Exception e) {
+			System.out.println("Invalid Manufacturer!");
+		}
 	}
 
 	@FindBy(xpath = "//span[@class='zw-cmn-loadMore']")
@@ -77,7 +104,13 @@ public class UpcomingBikes extends BasePage {
 
 	public void checkViewMore() {
 		try {
-			jse.executeScript("arguments[0].scrollIntoView();", viewMore);
+			borderElement(viewMore);
+//			jse.executeScript("arguments[0].scrollIntoView();", viewMore);
+			jse.executeScript("window.scrollBy(0,1300);");
+			Screenshots.captureScreen(driver, "ViewMore", folderName);
+
+			sleep(2000);
+
 			jse.executeScript("arguments[0].click();", viewMore);
 		} catch (Exception e) {
 			System.out.println("View More not available!");
@@ -98,7 +131,7 @@ public class UpcomingBikes extends BasePage {
 		for (int i = 0; i < size; i++) {
 			bike = new String[3];
 			currentBike = bikeDiv.get(i);
-
+//			borderElement(currentBike);
 			jse.executeScript("arguments[0].scrollIntoView();", currentBike);
 
 			String priceString = bikePrice.get(i).getText();
@@ -114,18 +147,28 @@ public class UpcomingBikes extends BasePage {
 			}
 
 			if (priceDouble <= 4.0) {
+				borderElement(currentBike);
 				bike[0] = bikeNames.get(i).getText();
 				bike[1] = bikePrice.get(i).getText();
 				bike[2] = bikeLaunchDate.get(i).getText();
 				bikeDetails.add(bike);
-				Screenshots.captureScreen(currentBike, bike[0].trim(), "Bikes");
-				sleep(1000);
+
+				printBike(bike);
+				Screenshots.captureScreen(currentBike, bike[0].trim(), folderName + "//Bikes");
+				sleep(3000);
 			}
 
 		}
 
 		return bikeDetails;
 
+	}
+
+	void printBike(String[] bike) {
+		System.out.println("Bike Name: " + bike[0]);
+		System.out.println("Bike Price: " + bike[1]);
+		System.out.println("Bike " + bike[2]);
+		System.out.println("-----------------------------");
 	}
 
 }

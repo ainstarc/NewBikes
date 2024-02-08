@@ -22,9 +22,13 @@ public class ExcelUtilities {
 	String path;
 
 	public void deleteExcel(String fileName) {
-		path = System.getProperty("user.dir") + "\\testData\\" + fileName + ".xlsx";
-		file = new File(path);
-		file.delete();
+		try {
+			path = System.getProperty("user.dir") + "\\testData\\" + fileName + ".xlsx";
+			file = new File(path);
+			file.delete();
+		} catch (Exception e) {
+
+		}
 	}
 
 	public void setCellData(String fileName, String sheetName, int rownum, int colnum, String data) throws IOException {

@@ -27,11 +27,16 @@ public class TC_002_UsedCars extends BaseClass {
 
 	@Test(priority = 2, dependsOnMethods = "test_UsedCars")
 	public void test_CarCity() {
-		boolean actual = usedCars.validateCity(rb.getString("city"));
-
+		String city = rb.getString("city");
+		boolean actual;
+		if (usedCars.validateCity(city)) {
+			usedCars.clickCity();
+			actual = true;
+		} else {
+			actual = usedCars.searchCity(city);
+		}
 		Assert.assertEquals(actual, expected);
 
-		usedCars.clickCity();
 	}
 
 	@Test(priority = 3, dependsOnMethods = "test_CarCity")

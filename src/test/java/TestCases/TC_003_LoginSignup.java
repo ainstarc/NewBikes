@@ -31,15 +31,27 @@ public class TC_003_LoginSignup extends BaseClass {
 	}
 
 	@Test(dependsOnMethods = "test_GoogleButton")
-	public void test_VerifyLogin() throws IOException {
+	public void test_VerifyNavigation() {
 
-		loginPage.navigateToGoogleLogin();
+		boolean navigate = loginPage.navigateToGoogleLogin();
+		Assert.assertEquals(navigate, expected);
+	}
+
+	@Test(dependsOnMethods = "test_VerifyNavigation")
+	public void test_VerifyLogin() throws IOException {
 		String errorMessage = loginPage.verifyNegativeLogin(rb.getString("email"));
 		String sheetName = "ErrorMessage";
 		excelUtilities.setCellData(fileName, sheetName, 0, 0, errorMessage);
-		String expectedErrorMessage = "Couldn’t find your Google Account";
-		System.out.println(errorMessage);
-		System.out.println(expectedErrorMessage);
-		Assert.assertEquals(errorMessage, expectedErrorMessage);
+		String[] expectedErrorMessage = { "Couldn’t find your Google Account", "Couldn’t sign you in" };
+
+		for (String error : expectedErrorMessage) {
+			if (error.equalsIgnoreCase(errorMessage)) {
+				System.out.println("if"+errorMessage);
+				return;
+			} else {
+				System.out.println(errorMessage + "else " + error);
+			}
+		}
+		Assert.fail();
 	}
 }

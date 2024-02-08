@@ -12,13 +12,13 @@ import org.openqa.selenium.WebElement;
 
 public class Screenshots {
 
-	public static String captureScreen(WebDriver driver, String tname, String folder) {
+	public static String captureScreen(WebDriver driver, String name, String folder) {
 
 		String timeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
 
 		TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
 		File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
-		String destination = System.getProperty("user.dir") + "\\screenshots\\" + folder + "\\" + tname + "_"
+		String destination = System.getProperty("user.dir") + "\\screenshots\\" + folder + "\\" + name + "_"
 				+ timeStamp + ".png";
 
 		try {
@@ -30,13 +30,13 @@ public class Screenshots {
 
 	}
 
-	public static String captureScreen(WebElement element, String tname, String folder) {
+	public static String captureScreen(WebElement element, String name, String folder) {
 
 		String timeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
 
 		TakesScreenshot takesScreenshot = (TakesScreenshot) element;
 		File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
-		String destination = System.getProperty("user.dir") + "\\screenshots\\" + folder + "\\" + tname + "_"
+		String destination = System.getProperty("user.dir") + "\\screenshots\\" + folder + "\\" + name + "_"
 				+ timeStamp + ".png";
 
 		try {

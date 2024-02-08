@@ -14,14 +14,13 @@ public class LoginPage extends BasePage {
 	}
 
 	@FindBy(id = "forum_login_title_lg")
-	WebElement loginSignup;
+	private WebElement loginSignup;
 
 	@FindBy(xpath = "//span[text()='Google']")
-	WebElement googleButton;
+	private WebElement googleButton;
 
 	public boolean validateLoginSignup() {
-		sleep(2000);
-		return loginSignup.isDisplayed();
+		return checkVisible(loginSignup);
 	}
 
 	public void clickLoginSignup() {
@@ -29,54 +28,51 @@ public class LoginPage extends BasePage {
 	}
 
 	public boolean validateGoogleButton() {
-		sleep(2000);
-		return googleButton.isDisplayed();
+		return checkClickable(googleButton);
 	}
 
 	public void clickGoogleButton() {
 		googleButton.click();
 	}
 
-	Set<String> windowHandles;
+	private Set<String> windowHandles;
 
-	public void navigateToGoogleLogin() {
+	public boolean navigateToGoogleLogin() {
 		sleep(2000);
 		windowHandles = driver.getWindowHandles();
-
-		if (windowHandles.size() == 1) {
-			clickGoogleButton();
-			navigateToGoogleLogin();
-		}
-
 		for (String window : windowHandles) {
 			driver.switchTo().window(window);
 			String title = driver.getTitle();
 
 			if (title.contains("Google")) {
-				driver.manage().window().maximize();
-				break;
+//				driver.manage().window().maximize();
+				return true;
 			}
-
 		}
-
+		return false;
 	}
 
 	@FindBy(id = "identifierId")
 	WebElement emailBox;
+
 	@FindBy(xpath = "//span[text()='Next']")
 	WebElement nextButton;
-	@FindBy(xpath = "//input[@id='identifierId']//ancestor::div[3]//following-sibling::div//span/parent::div")
-	WebElement errorMessage;
+//	@FindBy(xpath = "//input[@id='identifierId']//ancestor::div[3]//following-sibling::div//span/parent::div")
+	@FindBy(xpath = "//*[@id='yDmH0d']//span//span/parent::div")
+	WebElement wrongEmailErrorMessage;
+	@FindBy(xpath = "//h1/span")
+	WebElement rejectLoginErrorMessage;
 
 	public String verifyNegativeLogin(String email) {
 		emailBox.sendKeys(email);
 		nextButton.click();
-
-		sleep(2000);
-
-		String msg = errorMessage.getText();
-
-		return msg;
+		if (checkVisible(wrongEmailErrorMessage))
+			return wrongEmailErrorMessage.getText();
+		else if (checkVisible(rejectLoginErrorMessage))
+			return rejectLoginErrorMessage.getText();
+		else {
+			return "";
+		}
 
 	}
 }

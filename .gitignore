@@ -21,3 +21,6 @@ test-output/
 
 # OS-specific files
 .DS_Store
+
+#Screenshots
+screenshots/
