@@ -24,3 +24,6 @@ test-output/
 
 #Screenshots
 screenshots/
+
+#ExtentReports
+extentReports/

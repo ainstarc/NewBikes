@@ -99,7 +99,7 @@ public class UpcomingBikes extends BasePage {
 	@FindAll(@FindBy(xpath = "//div[@class='p-15 pt-10 mke-ryt rel']/parent::div"))
 	private List<WebElement> bikeDiv;
 
-	private List<String[]> bikeDetails = new ArrayList<>();
+	private List<String[]> bikeDetails = new ArrayList<String[]>();
 	private String[] bike;
 
 	public void checkViewMore() {

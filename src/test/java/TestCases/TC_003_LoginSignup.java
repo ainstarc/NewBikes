@@ -46,10 +46,7 @@ public class TC_003_LoginSignup extends BaseClass {
 
 		for (String error : expectedErrorMessage) {
 			if (error.equalsIgnoreCase(errorMessage)) {
-				System.out.println("if"+errorMessage);
 				return;
-			} else {
-				System.out.println(errorMessage + "else " + error);
 			}
 		}
 		Assert.fail();
