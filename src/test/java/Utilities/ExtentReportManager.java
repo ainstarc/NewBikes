@@ -2,7 +2,6 @@ package Utilities;
 
 import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,8 +14,6 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-
-import TestBase.BaseClass;
 
 public class ExtentReportManager implements ITestListener {
 	public ExtentSparkReporter sparkReporter;
@@ -31,7 +28,7 @@ public class ExtentReportManager implements ITestListener {
 
 		sparkReporter = new ExtentSparkReporter(".\\extentReports\\" + repName);// specify location of the report
 
-		sparkReporter.config().setDocumentTitle("Automation Testing"); // Title of report
+		sparkReporter.config().setDocumentTitle("Hackathon Project"); // Title of report
 		sparkReporter.config().setReportName("Zigwheels Functionality Testing"); // name of the report
 		sparkReporter.config().setTheme(Theme.DARK);
 
@@ -39,7 +36,7 @@ public class ExtentReportManager implements ITestListener {
 		extent.attachReporter(sparkReporter);
 		extent.setSystemInfo("Application", "Zigwheels");
 		extent.setSystemInfo("Module", "Zigwheels");
-		extent.setSystemInfo("Sub Module", "Zigwheels");
+		extent.setSystemInfo("Sub Module", "1. Upcoming Bikes\n2. Used Cars\n3. Login Functionality");
 		extent.setSystemInfo("Operating System", System.getProperty("os.name"));
 		extent.setSystemInfo("User Name", System.getProperty("user.name"));
 		extent.setSystemInfo("Environemnt", "QA");
@@ -49,8 +46,7 @@ public class ExtentReportManager implements ITestListener {
 		test = extent.createTest(result.getName());
 		test.log(Status.PASS, "Test Passed");
 
-		new BaseClass();
-		String imgPath = TestBase.BaseClass.captureScreen(result.getName());
+		String imgPath = TestBase.BaseClass.captureScreen("ExtentReports\\" + result.getName());
 		test.addScreenCaptureFromPath(imgPath);
 	}
 
@@ -58,9 +54,8 @@ public class ExtentReportManager implements ITestListener {
 		test = extent.createTest(result.getName());
 		test.log(Status.FAIL, "Test Failed");
 		test.log(Status.FAIL, result.getThrowable().getMessage());
-		
-		new BaseClass();
-		String imgPath = TestBase.BaseClass.captureScreen(result.getName());
+
+		String imgPath = TestBase.BaseClass.captureScreen("ExtentReports\\" + result.getName());
 		test.addScreenCaptureFromPath(imgPath);
 	}
 

@@ -52,8 +52,20 @@ public class BasePage {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void borderElement(WebElement element) {
-		jse.executeScript("arguments[0].style.border='2px solid red'",element);
+		try {
+			jse.executeScript("arguments[0].style.border='2px solid red'", element);
+		} catch (Exception e) {
+
+		}
+	}
+
+	public static void bgColor(WebElement element) {
+		try {
+			jse.executeScript("arguments[0].style.backgroundColor = 'yellow'", element);
+		} catch (Exception e) {
+
+		}
 	}
 }

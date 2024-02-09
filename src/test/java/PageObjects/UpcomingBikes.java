@@ -1,6 +1,8 @@
 package PageObjects;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -18,8 +20,8 @@ public class UpcomingBikes extends BasePage {
 	public UpcomingBikes(WebDriver driver) {
 		super(driver);
 	}
-
-	private String folderName = "UpcomingBikes";
+	private String folderTimeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+	private String folderName = "UpcomingBikes"+folderTimeStamp;
 
 	@FindBy(xpath = "//a[normalize-space()='New Bikes']")
 	private WebElement newBikes;
@@ -75,10 +77,11 @@ public class UpcomingBikes extends BasePage {
 
 	public void selectManufacturers(String manufacturer) {
 		borderElement(manufacturers);
+		Screenshots.captureScreen(driver, "SelectManufacturer", folderName);
 		manufacturerSelect = new Select(manufacturers);
 		try {
 			manufacturerSelect.selectByVisibleText(manufacturer);
-			Screenshots.captureScreen(driver, "SelectManufacturer", folderName);
+			Screenshots.captureScreen(driver, manufacturer, folderName);
 		} catch (Exception e) {
 			System.out.println("Invalid Manufacturer!");
 		}

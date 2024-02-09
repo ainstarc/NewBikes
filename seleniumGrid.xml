@@ -4,34 +4,19 @@
 	<listeners>
 		<listener class-name="Utilities.ExtentReportManager" />
 	</listeners>
-	<!-- -->
+
+	<parameter name="os" value="windows" />
+	<parameter name="environment" value="remote" />
+
 	<test thread-count="5" name="ChromeTest">
 		<parameter name="browser" value="chrome" />
-		<parameter name="os" value="windows" />
-		<parameter name="environment" value="local" />
-		<classes>
-			<!--
-			-->
-			<class name="TestCases.TC_001_UpcomingBikes" />
-			<!--
-			<class name="TestCases.TC_002_UsedCars" />
-			<class name="TestCases.TC_003_LoginSignup" />
-			-->
-		</classes>
-	</test>
-	<!--
-	<test thread-count="5" name="ChromeTest">
-		<parameter name="browser" value="chrome" />
-		<parameter name="os" value="windows" />
-		<parameter name="environment" value="remote" />
 		<classes>
 			<class name="TestCases.TC_001_UpcomingBikes" />
 			<class name="TestCases.TC_002_UsedCars" />
 			<class name="TestCases.TC_003_LoginSignup" />
 		</classes>
 	</test>
-	-->
-	<!-- 
+
 	<test thread-count="5" name="EdgeTest">
 		<parameter name="browser" value="edge" />
 		<classes>
@@ -41,6 +26,4 @@
 		</classes>
 	</test>
 	-->
-
-
 </suite> 

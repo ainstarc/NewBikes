@@ -1,5 +1,7 @@
 package PageObjects;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -18,7 +20,8 @@ public class UsedCars extends BasePage {
 		super(driver);
 	}
 
-	private String folderName = "UsedCars";
+	private String folderTimeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+	private String folderName = "UpcomingBikes" + folderTimeStamp;
 
 	@FindBy(xpath = "//a[normalize-space()='Used Cars']")
 	private WebElement usedCars;
@@ -118,12 +121,17 @@ public class UsedCars extends BasePage {
 	private String[] popularModelsText;
 
 	@FindBy(xpath = "//span[text()='Brand and Model']")
-	private WebElement brandMondel;
+	private WebElement brandModel;
+
+	@FindBy(xpath = "//span[text()='Brand and Model']//ancestor::li")
+	private WebElement brandModelLi;
 
 	public String[] popularModelList() {
 		int size = popularModelsElement.size();
 		popularModelsText = new String[size];
-		jse.executeScript("arguments[0].scrollIntoView();", brandMondel);
+		jse.executeScript("arguments[0].scrollIntoView();", brandModelLi);
+		borderElement(brandModelLi);
+		bgColor(brandModelLi);
 		Screenshots.captureScreen(driver, "PopularModels", folderName);
 
 		int i = 0;
