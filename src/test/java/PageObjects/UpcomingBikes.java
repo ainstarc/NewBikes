@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -20,14 +22,21 @@ public class UpcomingBikes extends BasePage {
 	public UpcomingBikes(WebDriver driver) {
 		super(driver);
 	}
+
 	private String folderTimeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-	private String folderName = "UpcomingBikes"+folderTimeStamp;
+	private String folderName = "UpcomingBikes" + folderTimeStamp;
 
 	@FindBy(xpath = "//a[normalize-space()='New Bikes']")
 	private WebElement newBikes;
 
 	@FindBy(xpath = "//span[text()='Upcoming Bikes']")
 	private WebElement upcomingBikes;
+
+	public boolean validateHomePageURL() {
+		String url = driver.getCurrentUrl();
+		boolean homeURL = URLConnectionCheck(url);
+		return homeURL;
+	}
 
 	public boolean validateNewBikes() {
 		return checkVisible(newBikes);
@@ -49,41 +58,81 @@ public class UpcomingBikes extends BasePage {
 	@FindBy(xpath = "//a[text()='Upcoming Bikes']")
 	private WebElement allUpcomingBikes;
 
-	public void clickUpcomingBikes() {
+	public boolean clickUpcomingBikes() {
 		if (checkClickable(upcomingBikes)) {
 			borderElement(upcomingBikes);
+			Screenshots.captureScreen(driver, "UpcomingBikes", folderName);
 			upcomingBikes.click();
-		} else {
-			borderElement(newBikes);
-			newBikes.click();
+			return true;
 		}
+		return false;
+	}
+
+	public boolean clickUpcoming() {
+		borderElement(newBikes);
+		newBikes.click();
+
 		if (checkClickable(upcoming)) {
 			borderElement(upcoming);
 			upcoming.click();
+
+			if (checkClickable(allUpcomingBikes)) {
+				borderElement(allUpcomingBikes);
+				jse.executeScript("arguments[0].click();", allUpcomingBikes);
+				return true;
+			}
 		}
-		if (checkClickable(allUpcomingBikes)) {
-			borderElement(allUpcomingBikes);
-			jse.executeScript("arguments[0].click();", allUpcomingBikes);
-		}
+		return false;
 	}
 
 	@FindBy(id = "makeId")
 	private WebElement manufacturers;
 	private Select manufacturerSelect;
 
+//	@FindBy(xpath = "//a[text()='Honda']")
+	private WebElement brandElement;
+
 	public boolean validateManufacturers() {
 		return checkVisible(manufacturers);
 	}
 
-	public void selectManufacturers(String manufacturer) {
+	public boolean brandElement(String brand) {
+		try {
+			String brandXpath = "//a[text()='" + brand + "']";
+			brandElement = driver.findElement(By.xpath(brandXpath));
+			jse.executeScript("arguments[0].scrollIntoView();", brandElement);
+			actions.sendKeys(Keys.ARROW_UP).perform();
+			borderElement(brandElement);
+			Screenshots.captureScreen(driver, "SelectBrand", folderName);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public boolean validateBrandURL() {
+		String brandURL = brandElement.getAttribute("href");
+		return URLConnectionCheck(brandURL);
+	}
+
+	public void selectBrand() {
+//		brandElement.click();
+		sleep(3000);
+		jse.executeScript("arguments[0].click();", brandElement);
+	}
+
+	public boolean selectManufacturers(String brand) {
+		jse.executeScript("arguments[0].scrollIntoView();", manufacturers);
 		borderElement(manufacturers);
 		Screenshots.captureScreen(driver, "SelectManufacturer", folderName);
 		manufacturerSelect = new Select(manufacturers);
 		try {
-			manufacturerSelect.selectByVisibleText(manufacturer);
-			Screenshots.captureScreen(driver, manufacturer, folderName);
+			manufacturerSelect.selectByVisibleText(brand);
+			Screenshots.captureScreen(driver, brand, folderName);
+			return true;
 		} catch (Exception e) {
 			System.out.println("Invalid Manufacturer!");
+			return false;
 		}
 	}
 
@@ -123,7 +172,7 @@ public class UpcomingBikes extends BasePage {
 	WebElement currentBike;
 
 	public List<String[]> getDetails() {
-		checkViewMore();
+//		checkViewMore();/
 
 		sleep(5000);
 

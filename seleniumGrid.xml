@@ -11,12 +11,14 @@
 	<test thread-count="5" name="ChromeTest">
 		<parameter name="browser" value="chrome" />
 		<classes>
+			<!--
 			<class name="TestCases.TC_001_UpcomingBikes" />
 			<class name="TestCases.TC_002_UsedCars" />
+			-->
 			<class name="TestCases.TC_003_LoginSignup" />
 		</classes>
 	</test>
-
+	<!--
 	<test thread-count="5" name="EdgeTest">
 		<parameter name="browser" value="edge" />
 		<classes>

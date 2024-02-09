@@ -56,7 +56,7 @@ public class LoginPage extends BasePage {
 			String title = driver.getTitle();
 
 			if (title.contains("Google")) {
-//				driver.manage().window().maximize();
+				driver.manage().window().maximize();
 				return true;
 			}
 		}

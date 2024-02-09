@@ -16,30 +16,47 @@ public class TC_001_UpcomingBikes extends BaseClass {
 	UpcomingBikes homePage;
 
 	@Test
-	public void test_NewBikes() {
+	public void test_homePageURL() {
 		homePage = new UpcomingBikes(driver);
-		boolean actual = homePage.validateNewBikes();
-		Assert.assertEquals(actual, expected);
+		boolean actual = homePage.validateHomePageURL();
+		Assert.assertTrue(actual, "Unable to load BaseURL!");
+	}
 
+	@Test(dependsOnMethods = "test_homePageURL")
+	public void test_NewBikes() {
+
+		boolean actual = homePage.validateNewBikes();
+		Assert.assertTrue(actual, "New Bikes is unavailable!");
 		homePage.newBikeHover();
 		captureScreen("NewBikeHover");
 	}
 
 	@Test(dependsOnMethods = "test_NewBikes")
 	public void test_UpcomingBikes() {
-		boolean actual = homePage.validateUpcomingBikes();
-		Assert.assertEquals(actual, expected);
-		homePage.clickUpcomingBikes();
+		boolean actual = false;
+		if (homePage.validateUpcomingBikes()) {
+			actual = homePage.clickUpcomingBikes();
+		} else {
+			actual = homePage.clickUpcoming();
+		}
+		Assert.assertTrue(actual, "Unable to find Upcoming Bikes Option!");
+
 	}
 
 	@Test(dependsOnMethods = "test_UpcomingBikes")
 	public void test_Manufacturers() {
-		boolean actual = homePage.validateManufacturers();
-		captureScreen("UpcomingBikes");
-		Assert.assertEquals(actual, expected);
-
-		homePage.selectManufacturers(rb.getString("manufacturer"));
-		captureScreen("Manufacturer");
+		boolean actual;
+		String brand = rb.getString("manufacturer");
+		if (homePage.brandElement(brand)) {
+			actual = homePage.validateBrandURL();
+			Assert.assertTrue(actual, "Brand URL not working!");
+			homePage.selectBrand();
+			captureScreen("Manufacturer");
+		} else {
+			actual = homePage.selectManufacturers(brand);
+			captureScreen("Manufacturer");
+			Assert.assertTrue(actual, "Invalid Manufacturer!");
+		}
 	}
 
 	@Test(dependsOnMethods = "test_Manufacturers")

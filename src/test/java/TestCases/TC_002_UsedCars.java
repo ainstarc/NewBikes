@@ -19,7 +19,7 @@ public class TC_002_UsedCars extends BaseClass {
 		usedCars.scrollToTop();
 		boolean actual = usedCars.validateUsedCars();
 
-		Assert.assertEquals(actual, expected);
+		Assert.assertTrue(actual, "Used Cars Option not Available!");
 
 		usedCars.hoverUsedCars();
 
@@ -35,7 +35,7 @@ public class TC_002_UsedCars extends BaseClass {
 		} else {
 			actual = usedCars.searchCity(city);
 		}
-		Assert.assertEquals(actual, expected);
+		Assert.assertTrue(actual, "Invalid City!");
 
 	}
 

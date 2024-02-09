@@ -18,8 +18,8 @@ public class Screenshots {
 
 		TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
 		File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
-		String destination = System.getProperty("user.dir") + "\\screenshots\\" + folder + "\\" + name + "_"
-				+ timeStamp + ".png";
+		String destination = System.getProperty("user.dir") + "\\screenshots\\" + folder + "\\" + name + "_" + timeStamp
+				+ ".png";
 
 		try {
 			FileUtils.copyFile(source, new File(destination));
@@ -36,8 +36,8 @@ public class Screenshots {
 
 		TakesScreenshot takesScreenshot = (TakesScreenshot) element;
 		File source = takesScreenshot.getScreenshotAs(OutputType.FILE);
-		String destination = System.getProperty("user.dir") + "\\screenshots\\" + folder + "\\" + name + "_"
-				+ timeStamp + ".png";
+		String destination = System.getProperty("user.dir") + "\\screenshots\\" + folder + "\\" + name + "_" + timeStamp
+				+ ".png";
 
 		try {
 			FileUtils.copyFile(source, new File(destination));

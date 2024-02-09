@@ -55,9 +55,11 @@ public class BaseClass {
 			switch (br.toLowerCase()) {
 			case "chrome":
 				capabilities.setBrowserName("chrome");
+				fileName = fileNameChrome();
 				break;
 			case "edge":
 				capabilities.setBrowserName("MicrosoftEdge");
+				fileName = fileNameEdge();
 				break;
 			default:
 				System.out.println("No matching browser..");

@@ -63,11 +63,4 @@ public class ExcelUtilities {
 		fi.close();
 		fo.close();
 	}
-
-//	public static void main(String[] args) throws IOException {
-//		ExcelUtilities eu = new ExcelUtilities();
-//		
-//		eu.deleteExcel("UpcomingBikes");
-//	}
-
 }

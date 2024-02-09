@@ -1,5 +1,7 @@
 package PageObjects;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.Duration;
 
 import org.openqa.selenium.JavascriptExecutor;
@@ -66,6 +68,29 @@ public class BasePage {
 			jse.executeScript("arguments[0].style.backgroundColor = 'yellow'", element);
 		} catch (Exception e) {
 
+		}
+	}
+
+	public static boolean URLConnectionCheck(String urlToCheck) {
+		try {
+			URL url = new URL(urlToCheck);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.connect();
+			;
+			int responseCode = connection.getResponseCode();
+
+			if (responseCode == HttpURLConnection.HTTP_OK) {
+				System.out.println("URL is reachable with status code " + responseCode);
+				return true;
+			} else {
+				System.out.println("URL is not reachable with status code " + responseCode);
+				return false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 }

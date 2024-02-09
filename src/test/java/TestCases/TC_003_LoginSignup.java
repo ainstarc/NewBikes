@@ -17,7 +17,7 @@ public class TC_003_LoginSignup extends BaseClass {
 		loginPage = new LoginPage(driver);
 
 		boolean actual = loginPage.validateLoginSignup();
-		Assert.assertEquals(actual, expected);
+		Assert.assertTrue(actual, "Login-SignUp Option not Available!");
 
 		loginPage.clickLoginSignup();
 	}
@@ -25,7 +25,7 @@ public class TC_003_LoginSignup extends BaseClass {
 	@Test(dependsOnMethods = "test_LoginSignup")
 	public void test_GoogleButton() {
 		boolean actual = loginPage.validateGoogleButton();
-		Assert.assertEquals(actual, expected);
+		Assert.assertTrue(actual, "Google Button not Available!");
 
 		loginPage.clickGoogleButton();
 	}
@@ -34,7 +34,7 @@ public class TC_003_LoginSignup extends BaseClass {
 	public void test_VerifyNavigation() {
 
 		boolean navigate = loginPage.navigateToGoogleLogin();
-		Assert.assertEquals(navigate, expected);
+		Assert.assertTrue(navigate, "Unable to Navigate to Google Login Page!");
 	}
 
 	@Test(dependsOnMethods = "test_VerifyNavigation")
@@ -46,9 +46,10 @@ public class TC_003_LoginSignup extends BaseClass {
 
 		for (String error : expectedErrorMessage) {
 			if (error.equalsIgnoreCase(errorMessage)) {
+				System.out.println("ErrorMessage: " + errorMessage);
 				return;
 			}
 		}
-		Assert.fail();
+		Assert.fail("Wrong Error Message or Error Message not Found!");
 	}
 }
