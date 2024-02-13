@@ -3,10 +3,10 @@ package TestCases;
 import java.io.IOException;
 import java.util.List;
 
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import PageObjects.UpcomingBikes;
 import TestBase.BaseClass;
@@ -15,24 +15,31 @@ public class TC_001_UpcomingBikes extends BaseClass {
 
 	UpcomingBikes homePage;
 
-	@Test
-	public void test_homePageURL() {
+	@BeforeMethod(groups = { "smoke", "sanity", "regression" })
+	public void driverInit() {
 		homePage = new UpcomingBikes(driver);
+	}
+
+	@Test(priority = 1, groups = { "smoke", "sanity" })
+	public void test_ValidateHomePageURL() {
 		boolean actual = homePage.validateHomePageURL();
 		Assert.assertTrue(actual, "Unable to load BaseURL!");
 	}
 
-	@Test(dependsOnMethods = "test_homePageURL")
-	public void test_NewBikes() {
-
+	@Test(priority = 2, groups = { "sanity", "regression" })
+	public void test_ValidateNewBikes() {
 		boolean actual = homePage.validateNewBikes();
 		Assert.assertTrue(actual, "New Bikes is unavailable!");
+	}
+
+	@Test(groups = { "regression" }, dependsOnMethods = "test_ValidateNewBikes")
+	public void test_HoverNewBikes() {
 		homePage.newBikeHover();
 		captureScreen("NewBikeHover");
 	}
 
-	@Test(dependsOnMethods = "test_NewBikes")
-	public void test_UpcomingBikes() {
+	@Test(groups = { "regression" }, dependsOnMethods = "test_HoverNewBikes")
+	public void test_ClickUpcomingBikes() {
 		boolean actual = false;
 		if (homePage.validateUpcomingBikes()) {
 			actual = homePage.clickUpcomingBikes();
@@ -43,8 +50,8 @@ public class TC_001_UpcomingBikes extends BaseClass {
 
 	}
 
-	@Test(dependsOnMethods = "test_UpcomingBikes")
-	public void test_Manufacturers() {
+	@Test(groups = { "regression" }, dependsOnMethods = "test_ClickUpcomingBikes")
+	public void test_SelectManufacturers() {
 		boolean actual;
 		String brand = rb.getString("manufacturer");
 		if (homePage.brandElement(brand)) {
@@ -59,9 +66,22 @@ public class TC_001_UpcomingBikes extends BaseClass {
 		}
 	}
 
-	@Test(dependsOnMethods = "test_Manufacturers")
-	public void test_BikeDetails() throws IOException {
+	@Test(groups = { "regression" }, dependsOnMethods = "test_SelectManufacturers")
+	public void test_ValidateBikeNames() {
+
 		homePage.checkViewMore();
+
+		String brand = rb.getString("manufacturer");
+		boolean[] actual = homePage.checkBikeNames(brand);
+		SoftAssert sa = new SoftAssert();
+		for (boolean res : actual) {
+			sa.assertTrue(res);
+		}
+		sa.assertAll("Different Brand Bikes found!");
+	}
+
+	@Test(groups = { "regression" }, dependsOnMethods = "test_ValidateBikeNames")
+	public void test_GetBikeDetails() throws IOException {
 
 		List<String[]> bikeDetails = homePage.getDetails();
 

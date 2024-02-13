@@ -129,7 +129,8 @@ public class UsedCars extends BasePage {
 	public String[] popularModelList() {
 		int size = popularModelsElement.size();
 		popularModelsText = new String[size];
-		jse.executeScript("arguments[0].scrollIntoView();", brandModelLi);
+//		jse.executeScript("arguments[0].scrollIntoView();", brandModelLi);
+		jse.executeScript("window.scrollBy(0,600);");
 		borderElement(brandModelLi);
 		bgColor(brandModelLi);
 		Screenshots.captureScreen(driver, "PopularModels", folderName);

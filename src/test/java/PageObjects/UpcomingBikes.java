@@ -171,9 +171,26 @@ public class UpcomingBikes extends BasePage {
 
 	WebElement currentBike;
 
-	public List<String[]> getDetails() {
-
+	public boolean[] checkBikeNames(String brand) {
 		sleep(5000);
+		int size = bikeNames.size();
+		brand = brand.toLowerCase();
+		boolean[] validBike = new boolean[size];
+		int i = 0;
+		for (WebElement bike : bikeNames) {
+			String name = bike.getText();
+			name = name.toLowerCase();
+			if (name.contains(brand)) {
+				validBike[i++] = true;
+			} else {
+				validBike[i++] = false;
+			}
+		}
+		return validBike;
+
+	}
+
+	public List<String[]> getDetails() {
 
 		int size = bikeNames.size();
 

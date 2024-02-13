@@ -19,8 +19,8 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 
 import Utilities.ExcelUtilities;
@@ -35,7 +35,7 @@ public class BaseClass {
 	static ChromeOptions chromeOptions;
 	static EdgeOptions edgeOptions;
 
-	@BeforeTest
+	@BeforeClass(groups = { "smoke", "sanity", "regression" })
 	@Parameters({ "browser", "os", "environment" })
 	public void setUp(String br, String os, String environment) throws IOException {
 
@@ -84,11 +84,11 @@ public class BaseClass {
 		folderTimeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
 	}
 
-	@AfterTest
+	@AfterClass(groups = { "smoke", "sanity", "regression" })
 	public void tearDown() {
 
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

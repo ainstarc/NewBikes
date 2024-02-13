@@ -57,7 +57,7 @@ public class BasePage {
 
 	public static void borderElement(WebElement element) {
 		try {
-			jse.executeScript("arguments[0].style.border='2px solid red'", element);
+			jse.executeScript("arguments[0].style.border='2px solid green'", element);
 		} catch (Exception e) {
 
 		}

@@ -3,8 +3,10 @@ package TestCases;
 import java.io.IOException;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import PageObjects.UpcomingBikes;
 import PageObjects.UsedCars;
 import TestBase.BaseClass;
 
@@ -12,21 +14,24 @@ public class TC_002_UsedCars extends BaseClass {
 
 	UsedCars usedCars;
 
-	@Test(priority = 1)
-	public void test_UsedCars() {
+	@BeforeMethod(groups = { "smoke", "sanity", "regression" })
+	public void driverInit() {
 		usedCars = new UsedCars(driver);
-
-		usedCars.scrollToTop();
-		boolean actual = usedCars.validateUsedCars();
-
-		Assert.assertTrue(actual, "Used Cars Option not Available!");
-
-		usedCars.hoverUsedCars();
-
 	}
 
-	@Test(priority = 2, dependsOnMethods = "test_UsedCars")
-	public void test_CarCity() {
+	@Test(groups = { "sanity", "regression" })
+	public void test_ValidateUsedCars() {
+		boolean actual = usedCars.validateUsedCars();
+		Assert.assertTrue(actual, "Used Cars Option not Available!");
+	}
+
+	@Test(groups = { "regression" }, dependsOnMethods = "test_ValidateUsedCars")
+	public void test_HoverUsedCars() {
+		usedCars.hoverUsedCars();
+	}
+
+	@Test(groups = { "regression" }, dependsOnMethods = "test_HoverUsedCars")
+	public void test_SelectCarCity() {
 		String city = rb.getString("city");
 		boolean actual;
 		if (usedCars.validateCity(city)) {
@@ -39,8 +44,8 @@ public class TC_002_UsedCars extends BaseClass {
 
 	}
 
-	@Test(priority = 3, dependsOnMethods = "test_CarCity")
-	public void test_PopularModels() throws IOException {
+	@Test(groups = { "regression" }, dependsOnMethods = "test_SelectCarCity")
+	public void test_GetPopularModels() throws IOException {
 
 		String[] popularModels = usedCars.popularModelList();
 
@@ -52,7 +57,7 @@ public class TC_002_UsedCars extends BaseClass {
 
 	}
 
-	@Test(priority = 4)
+//	@Test(dependsOnMethods = "test_GetPopularModels")
 	public void test_NavigateToHomePage() {
 		usedCars.navigateToHomePage();
 	}
