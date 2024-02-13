@@ -6,7 +6,6 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
@@ -48,7 +47,7 @@ public class BaseClass {
 			} else if (os.equalsIgnoreCase("mac")) {
 				capabilities.setPlatform(Platform.MAC);
 			} else {
-				System.out.println("No matching os..");
+				System.out.println("No matching os!");
 				return;
 			}
 

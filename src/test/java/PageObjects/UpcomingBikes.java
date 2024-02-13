@@ -172,7 +172,6 @@ public class UpcomingBikes extends BasePage {
 	WebElement currentBike;
 
 	public List<String[]> getDetails() {
-//		checkViewMore();/
 
 		sleep(5000);
 
