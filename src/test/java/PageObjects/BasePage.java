@@ -30,10 +30,8 @@ public class BasePage {
 	public static boolean checkClickable(WebElement element) {
 		try {
 			wait.until(ExpectedConditions.elementToBeClickable(element));
-//			return clickElement;
 			return true;
 		} catch (Exception e) {
-//			return null;
 			return false;
 		}
 	}

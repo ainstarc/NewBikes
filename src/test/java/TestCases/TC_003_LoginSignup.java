@@ -49,7 +49,7 @@ public class TC_003_LoginSignup extends BaseClass {
 
 	@Test(groups = { "sanity", "regression" }, dependsOnMethods = "test_VerifyNavigation")
 	public void test_VerifyLogin() throws IOException {
-		String errorMessage = loginPage.verifyNegativeLogin(rb.getString("email"));
+		String errorMessage = loginPage.verifyNegativeLogin(randomEmail(8));
 		String sheetName = "ErrorMessage";
 		excelUtilities.setCellData(fileName, sheetName, 0, 0, errorMessage);
 		String[] expectedErrorMessage = { "Couldn’t find your Google Account", "Couldn’t sign you in" };

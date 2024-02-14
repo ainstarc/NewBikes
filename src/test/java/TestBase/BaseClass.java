@@ -6,6 +6,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
@@ -147,6 +148,20 @@ public class BaseClass {
 		}
 		return destination;
 
+	}
+
+	public static String randomEmail(int size) {
+		Random random = new Random();
+		StringBuilder username = new StringBuilder();
+
+		for (int i = 0; i < size; i++) {
+			char randomChar = (char) ('a' + random.nextInt(26));
+			username.append(randomChar);
+		}
+
+		String domain = "gmail.com";
+		String email = username.toString() + "@" + domain;
+		return email;
 	}
 
 }
