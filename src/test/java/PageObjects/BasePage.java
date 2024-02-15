@@ -2,7 +2,9 @@ package PageObjects;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +20,7 @@ public class BasePage {
 	static JavascriptExecutor jse;
 	static Actions actions;
 	static WebDriverWait wait;
+	static String folderTimeStamp = new SimpleDateFormat("yyyyMMddhh").format(new Date());
 
 	public BasePage(WebDriver driver) {
 		this.driver = driver;
@@ -56,14 +59,6 @@ public class BasePage {
 	public static void borderElement(WebElement element) {
 		try {
 			jse.executeScript("arguments[0].style.border='2px solid green'", element);
-		} catch (Exception e) {
-
-		}
-	}
-
-	public static void bgColor(WebElement element) {
-		try {
-			jse.executeScript("arguments[0].style.backgroundColor = 'yellow'", element);
 		} catch (Exception e) {
 
 		}

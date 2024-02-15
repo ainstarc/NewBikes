@@ -1,13 +1,10 @@
 package PageObjects;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -20,8 +17,7 @@ public class UsedCars extends BasePage {
 		super(driver);
 	}
 
-	private String folderTimeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-	private String folderName = "UpcomingBikes" + folderTimeStamp;
+	private String folderName = "UsedCars" + folderTimeStamp;
 
 	@FindBy(xpath = "//a[normalize-space()='Used Cars']")
 	private WebElement usedCars;
@@ -132,7 +128,6 @@ public class UsedCars extends BasePage {
 //		jse.executeScript("arguments[0].scrollIntoView();", brandModelLi);
 		jse.executeScript("window.scrollBy(0,600);");
 		borderElement(brandModelLi);
-		bgColor(brandModelLi);
 		Screenshots.captureScreen(driver, "PopularModels", folderName);
 
 		int i = 0;

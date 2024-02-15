@@ -1,0 +1,56 @@
+12:01:10.766 [main] INFO  TestCases.TC_001_UpcomingBikes - Validating HomePageURL...
+12:01:11.791 [main] INFO  TestCases.TC_001_UpcomingBikes - *****Starting TEST-SCENARIO-001*****
+12:01:12.309 [main] INFO  TestCases.TC_001_UpcomingBikes - Validating presence of NewBikes Dropdown.
+12:01:14.322 [main] INFO  TestCases.TC_001_UpcomingBikes - Hovered on NewBikes.
+12:01:17.834 [main] INFO  TestCases.TC_001_UpcomingBikes - Clicked on UpcomingBikes.
+12:01:23.380 [main] INFO  TestCases.TC_001_UpcomingBikes - Validating presence of Honda option in Brand-Suggestions.
+12:01:33.053 [main] INFO  TestCases.TC_001_UpcomingBikes - Checking presence of View More.
+12:01:38.891 [main] INFO  TestCases.TC_001_UpcomingBikes - Matching all Bike Names with selected Manufacturer Brand.
+12:01:47.138 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Honda CRF300L
+12:01:47.239 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Rs. 3.30 Lakh
+12:01:47.326 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Launch Date : 30 Mar 2024
+12:01:47.414 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Honda Activa Electric
+12:01:47.585 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Rs. 1.10 Lakh
+12:01:47.688 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Launch Date : Mar 2024
+12:01:47.777 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Honda Forza 350
+12:01:47.852 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Rs. 3.70 Lakh
+12:01:47.928 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Launch Date : Mar 2024
+12:01:48.023 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Honda CB350 Cruiser
+12:01:48.103 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Rs. 2.30 Lakh
+12:01:48.175 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Launch Date : Mar 2024
+12:01:48.238 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Honda Activa 7G
+12:01:48.315 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Rs. 79,000
+12:01:48.401 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Launch Date : Apr 2024
+12:01:48.478 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Honda PCX160
+12:01:48.546 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Rs. 1.20 Lakh
+12:01:48.612 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Launch Date : Jun 2024
+12:01:48.672 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Honda CBR150R
+12:01:48.732 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Rs. 1.70 Lakh
+12:01:48.832 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Launch Date : Unrevealed
+12:01:48.895 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Honda Rebel 300
+12:01:49.069 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Rs. 2.30 Lakh
+12:01:49.147 [main] INFO  TestCases.TC_001_UpcomingBikes - Setting Cell Data of Launch Date : Unrevealed
+12:01:49.597 [main] INFO  TestCases.TC_001_UpcomingBikes - *****Ended TEST-SCENARIO-001*****
+12:02:03.730 [main] INFO  TestCases.TC_002_UsedCars - *****Starting TEST-SCENARIO-002*****
+12:02:04.875 [main] INFO  TestCases.TC_002_UsedCars - Validating presence of UsedCars Dropdown.
+12:02:08.013 [main] INFO  TestCases.TC_002_UsedCars - Hovered on UsedCars Dropdown.
+12:02:39.441 [main] INFO  TestCases.TC_002_UsedCars - Clicked on Chennai city.
+12:02:41.503 [main] INFO  TestCases.TC_002_UsedCars - Setting cell data as Maruti 800
+12:02:41.586 [main] INFO  TestCases.TC_002_UsedCars - Setting cell data as Maruti Swift Dzire
+12:02:41.662 [main] INFO  TestCases.TC_002_UsedCars - Setting cell data as Maruti Swift
+12:02:41.744 [main] INFO  TestCases.TC_002_UsedCars - Setting cell data as Hyundai I10
+12:02:41.813 [main] INFO  TestCases.TC_002_UsedCars - Setting cell data as Hyundai Santro Xing
+12:02:41.882 [main] INFO  TestCases.TC_002_UsedCars - Setting cell data as Honda City
+12:02:41.959 [main] INFO  TestCases.TC_002_UsedCars - Setting cell data as Toyota Innova
+12:02:42.041 [main] INFO  TestCases.TC_002_UsedCars - Setting cell data as Toyota Fortuner
+12:02:42.129 [main] INFO  TestCases.TC_002_UsedCars - Setting cell data as Mahindra XUV500
+12:02:42.130 [main] INFO  TestCases.TC_002_UsedCars - *****Ended TEST-SCENARIO-002*****
+12:02:56.803 [main] INFO  TestCases.TC_003_LoginSignup - *****Starting TEST-SCENARIO-003*****
+12:02:58.482 [main] INFO  TestCases.TC_003_LoginSignup - Validating presence of LoginSignUp Button.
+12:02:59.783 [main] INFO  TestCases.TC_003_LoginSignup - Clicked on LoginSignUp Button.
+12:03:01.449 [main] INFO  TestCases.TC_003_LoginSignup - Validating presence of Google Button..
+12:03:02.882 [main] INFO  TestCases.TC_003_LoginSignup - Clicked on Google Button.
+12:03:07.705 [main] INFO  TestCases.TC_003_LoginSignup - Navigating to Google Login Page.
+12:03:11.719 [main] INFO  TestCases.TC_003_LoginSignup - Generating Random Email and Getting Error Message.
+12:03:12.037 [main] INFO  TestCases.TC_003_LoginSignup - Setting Error Message data into Excel.
+12:03:12.038 [main] INFO  TestCases.TC_003_LoginSignup - Validating Error Message.

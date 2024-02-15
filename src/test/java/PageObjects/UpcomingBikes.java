@@ -1,18 +1,14 @@
 package PageObjects;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import Utilities.Screenshots;
@@ -23,7 +19,6 @@ public class UpcomingBikes extends BasePage {
 		super(driver);
 	}
 
-	private String folderTimeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
 	private String folderName = "UpcomingBikes" + folderTimeStamp;
 
 	@FindBy(xpath = "//a[normalize-space()='New Bikes']")
@@ -222,8 +217,8 @@ public class UpcomingBikes extends BasePage {
 				bikeDetails.add(bike);
 
 				printBike(bike);
-				Screenshots.captureScreen(currentBike, bike[0].trim(), folderName + "//Bikes");
-				sleep(3000);
+//				Screenshots.captureScreen(currentBike, bike[0].trim(), folderName + "//Bikes");
+//				sleep(1000);
 			}
 
 		}

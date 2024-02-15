@@ -10,6 +10,8 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
@@ -35,10 +37,12 @@ public class BaseClass {
 	static String folderTimeStamp;
 	static ChromeOptions chromeOptions;
 	static EdgeOptions edgeOptions;
+	public static Logger logger;
 
 	@BeforeClass(groups = { "smoke", "sanity", "regression" })
 	@Parameters({ "browser", "os", "environment" })
 	public void setUp(String br, String os, String environment) throws IOException {
+		logger = LogManager.getLogger(this.getClass());
 
 		if (environment.equalsIgnoreCase("remote")) {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -55,11 +59,9 @@ public class BaseClass {
 			switch (br.toLowerCase()) {
 			case "chrome":
 				capabilities.setBrowserName("chrome");
-				fileName = fileNameChrome();
 				break;
 			case "edge":
 				capabilities.setBrowserName("MicrosoftEdge");
-				fileName = fileNameEdge();
 				break;
 			default:
 				System.out.println("No matching browser..");
@@ -71,10 +73,8 @@ public class BaseClass {
 		} else {
 			if (br.equalsIgnoreCase("chrome")) {
 				driver = chromeWithOptions();
-				fileName = fileNameChrome();
 			} else if (br.equalsIgnoreCase("edge")) {
 				driver = edgeWithOptions();
-				fileName = fileNameEdge();
 			}
 		}
 		driver.manage().deleteAllCookies();
@@ -87,12 +87,6 @@ public class BaseClass {
 
 	@AfterClass(groups = { "smoke", "sanity", "regression" })
 	public void tearDown() {
-
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		driver.quit();
 	}
 
@@ -115,22 +109,7 @@ public class BaseClass {
 		return rb.getString("baseURL");
 	}
 
-	public static String fileName;
-
-	static void fileName(String br) {
-		if (br.equalsIgnoreCase("chrome"))
-			fileName = fileNameChrome();
-		else if (br.equalsIgnoreCase("edge"))
-			fileName = fileNameEdge();
-	}
-
-	static String fileNameChrome() {
-		return rb.getString("fileNameChrome");
-	}
-
-	static String fileNameEdge() {
-		return rb.getString("fileNameEdge");
-	}
+	public static final String fileName = "data";
 
 	public static String captureScreen(String tname) {
 

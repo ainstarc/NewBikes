@@ -1,6 +1,6 @@
-**Project Name: Identify New Bikes**
+#**Project Name: Identify New Bikes**
 
-## Overview
+### Overview
 - This Selenium automation testing project focuses on automating tasks related to the zigwheels.com Website. 
 - The primary objectives includes: 
 		- Searching of upcoming bikes manufactured by Honda with price less than 4Lakhs, showing all the Bike models availables in page along with price and Launch date. 
@@ -9,7 +9,7 @@
 - This project uses various dependencies and libraries to facilitate automation. 
 - The whole project is developed using page object model framework under which there are classes which describes the functionality of the program.
 
-## Libraries and Dependencies
+### Libraries and Dependencies
 - **Maven Repository:** Maven 3.11.0
 - **Selenium WebDriver:** 4.15.0
 - **Apache POI:** 5.2.5
@@ -17,8 +17,8 @@
 - **Extent Report:** 5.0.9
 - **Loggers:** 2.22.0
 
-## Automation Flow
-1. Navigate to www.zigwheels.com
+### Automation Flow
+1. Navigate to the website.
 2. Validate if website is accesible or not.
 3. Validate presence of NewBikes dropdown.
 4. Hover on NewBikes.
@@ -35,7 +35,7 @@
 15. Enter random-wrong email and get the error message.
 
 
-## Libraries Explanation
+### Libraries Explanation
 - **Maven Repository:** Used for project management and dependency resolution.
 - **Selenium WebDriver:** Automates browser interactions.
 - **Apache POI:** Handles Excel operations for data-driven testing.
@@ -43,10 +43,10 @@
 - **Extent Report:** Generates comprehensive test reports.
 - **Loggers:** Facilitates logging for better debugging.
 
-## Screenshots
+### Screenshots
 Screenshots are captured at relevant steps for documentation and analysis.
 
-## How to Run
+### How to Run
 1. **Open Eclipse IDE:**
    - Launch Eclipse IDE on your machine.
 
@@ -72,7 +72,7 @@ Screenshots are captured at relevant steps for documentation and analysis.
    - After execution, open the `test-output` folder.
    - Find the TestNG file (`index.html`) for detailed test case reports.
 
-## Reporting
+### Reporting
 1. **Locate Test Reports:**
    - After the execution, navigate to the `test-output` folder in the project directory.
 
@@ -89,10 +89,10 @@ Screenshots are captured at relevant steps for documentation and analysis.
 5. **Analyze Results:**
    - Utilize the visual representation in the Extent Report to quickly identify test status and any issues encountered during the test run.
 
-## Contributors
+### Contributor
 - **Shouvik Roy 2303529**
 
-## Known Issues
+### Known Issues
 - **Issue 1: Slow Performance on Large Data Sets**
   - Description: The automation script may experience performance issues when dealing with large data sets in the Upcoming Bikes section.
   - Workaround: Consider optimizing the script or running it on a machine with higher processing capabilities.
@@ -110,7 +110,7 @@ Screenshots are captured at relevant steps for documentation and analysis.
   - Workaround: Try using different Gmail each time to test the site.
 
 
-## Future Enhancements
+### Future Enhancements
 - **Enhancement 1: Multi-Browser Support**
   - Description: Implement support for multiple browsers to enhance cross-browser compatibility.
   - Timeline: Targeting the next release.

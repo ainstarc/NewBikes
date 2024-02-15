@@ -23,18 +23,22 @@ public class TC_001_UpcomingBikes extends BaseClass {
 	@Test(priority = 1, groups = { "smoke", "sanity" })
 	public void test_ValidateHomePageURL() {
 		boolean actual = homePage.validateHomePageURL();
+		logger.info("Validating HomePageURL...");
 		Assert.assertTrue(actual, "Unable to load BaseURL!");
 	}
 
 	@Test(priority = 2, groups = { "sanity", "regression" })
 	public void test_ValidateNewBikes() {
+		logger.info("*****Starting TEST-SCENARIO-001*****");
 		boolean actual = homePage.validateNewBikes();
+		logger.info("Validating presence of NewBikes Dropdown.");
 		Assert.assertTrue(actual, "New Bikes is unavailable!");
 	}
 
 	@Test(groups = { "regression" }, dependsOnMethods = "test_ValidateNewBikes")
 	public void test_HoverNewBikes() {
 		homePage.newBikeHover();
+		logger.info("Hovered on NewBikes.");
 		captureScreen("NewBikeHover");
 	}
 
@@ -43,8 +47,12 @@ public class TC_001_UpcomingBikes extends BaseClass {
 		boolean actual = false;
 		if (homePage.validateUpcomingBikes()) {
 			actual = homePage.clickUpcomingBikes();
+			logger.info("Clicked on UpcomingBikes.");
 		} else {
 			actual = homePage.clickUpcoming();
+			logger.info("Clicked on NewBikes.");
+			logger.info("Clicked on Upcoming.");
+			logger.info("Clicked on All Upcoming Bikes.");
 		}
 		Assert.assertTrue(actual, "Unable to find Upcoming Bikes Option!");
 
@@ -56,11 +64,13 @@ public class TC_001_UpcomingBikes extends BaseClass {
 		String brand = rb.getString("manufacturer");
 		if (homePage.brandElement(brand)) {
 			actual = homePage.validateBrandURL();
-			Assert.assertTrue(actual, "Brand URL not working!");
-			homePage.selectBrand();
+			logger.info("Validating presence of {} option in Brand-Suggestions.", brand);
 			captureScreen("Manufacturer");
+			homePage.selectBrand();
+			Assert.assertTrue(actual, "Brand URL not working!");
 		} else {
 			actual = homePage.selectManufacturers(brand);
+			logger.info("Selected {String} manufacturer from Manufacturer dropdown.", brand);
 			captureScreen("Manufacturer");
 			Assert.assertTrue(actual, "Invalid Manufacturer!");
 		}
@@ -70,6 +80,7 @@ public class TC_001_UpcomingBikes extends BaseClass {
 	public void test_ValidateBikeNames() {
 
 		homePage.checkViewMore();
+		logger.info("Checking presence of View More.");
 
 		String brand = rb.getString("manufacturer");
 		boolean[] actual = homePage.checkBikeNames(brand);
@@ -77,6 +88,7 @@ public class TC_001_UpcomingBikes extends BaseClass {
 		for (boolean res : actual) {
 			sa.assertTrue(res);
 		}
+		logger.info("Matching all Bike Names with selected Manufacturer Brand.");
 		sa.assertAll("Different Brand Bikes found!");
 	}
 
@@ -94,9 +106,12 @@ public class TC_001_UpcomingBikes extends BaseClass {
 			j = 0;
 			for (String data : bike) {
 				excelUtilities.setCellData(fileName, sheetName, i, j++, data);
+				logger.info("Setting Cell Data of {}", data);
 			}
 			i++;
 		}
+		captureScreen("ExcelDataLoad");
+		logger.info("*****Ended TEST-SCENARIO-001*****");
 	}
 
 }

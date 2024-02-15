@@ -1,10 +1,7 @@
 package PageObjects;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Set;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,8 +14,7 @@ public class LoginPage extends BasePage {
 		super(driver);
 	}
 
-	private String folderTimeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-	private String folderName = "Login" + folderTimeStamp;
+	private String folderName = "LoginPage" + folderTimeStamp;
 
 	@FindBy(id = "forum_login_title_lg")
 	private WebElement loginSignup;
